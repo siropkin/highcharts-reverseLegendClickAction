@@ -1,26 +1,28 @@
 {
-    "name": "ReverseLegendClickAction",
-    "version": "1.0",
-    "title": "Revese Legend Click Action",
-    "author": {
-        "name": "Jayant Kumar",
-        "url": "https://github.com/jay2452"
-    },
-    "licenses": [
-        {
-            "type": "MIT",
-            "url": "https://github.com/jay2452/highcharts-reverseLegendClickAction/blob/master/LICENSE"
-        }
-    ],
-    "dependencies": {
-        "highcharts": "6+"
-    },
-    "description": "Revese click action selection and deselection when a legend is clicked",
-    "keywords": [
-        "legend",
-        "series"
-    ],
-    "demo": [
-        "https://jsfiddle.net/jayantt/045L9c3z/"
-    ]
+  "name": "ReverseLegendClickAction",
+  "version": "1.0",
+  "title": "Revese Legend Click Action",
+  "author": {
+    "name": "Jayant Kumar",
+    "url": "https://github.com/jay2452"
+  },
+  "licenses": [{
+    "type": "MIT",
+    "url": "https://github.com/jay2452/highcharts-reverseLegendClickAction/blob/master/LICENSE"
+  }],
+  "dependencies": {
+    "highcharts": "6+"
+  },
+  "description": "Revese click action selection and deselection when a legend is clicked",
+  "keywords": [
+    "legend",
+    "series"
+  ],
+  "demo": [
+    "https://jsfiddle.net/jayantt/045L9c3z/"
+  ],
+  "maintainers": [{
+    "name": "jayant kumar",
+    "email": "jay2452@live.com"
+  }]
 }
