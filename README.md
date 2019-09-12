@@ -1,4 +1,4 @@
-# highcharts-reverseLegendClickAction
+# Reverse Legend Click functionality for Highcharts
 Reverse the legend click action 
 
 This plugin will override the default functionality of highcharts legend click action.
