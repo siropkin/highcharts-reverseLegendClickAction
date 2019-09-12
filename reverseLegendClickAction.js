@@ -1,8 +1,8 @@
 (function (H) {
   H.wrap(H.Chart.prototype, 'init', function (proceed) {
     proceed.apply(this, Array.prototype.slice.call(arguments, 1));
-    const chart = this;
-    const isLegendClickReversed = chart.legend.options.reverseLegendClickAction || false;
+    var chart = this;
+    var isLegendClickReversed = chart.legend.options.reverseLegendClickAction || false;
     chart.update({
       chart: {
         __visibleSeries: []
@@ -21,30 +21,34 @@
             events: {
               legendItemClick: function (e) {
                 e.preventDefault();
-                if(this.chart.options.chart.__visibleSeries.length == 1 && this.chart.options.chart.__visibleSeries[0] === this.name){
+                var index = -1;
+                var legendClickedChart = this.chart;
+                if(legendClickedChart.options.chart.__visibleSeries.length == 1 && legendClickedChart.options.chart.__visibleSeries[0] === this.name){
                   // make all legend items visible
-                  this.chart.series.forEach(serie => serie.setVisible(true));
-                  this.chart.options.chart.__visibleSeries.length = 0;
+                  legendClickedChart.series.forEach(function (serie) {
+                    serie.setVisible(true);
+                  });
+                  legendClickedChart.options.chart.__visibleSeries.length = 0;
                   return false;
                 }
-                if(!this.chart.options.chart.__visibleSeries.includes(this.name)){
-                  this.chart.options.chart.__visibleSeries.push(this.name);
+                if(!legendClickedChart.options.chart.__visibleSeries.includes(this.name)){
+                  legendClickedChart.options.chart.__visibleSeries.push(this.name);
                 }else{
                   this.setVisible(false);
-                  let index = this.chart.options.chart.__visibleSeries.indexOf(this.name);
-                  this.chart.options.chart.__visibleSeries.splice(index, 1);
+                  index = legendClickedChart.options.chart.__visibleSeries.indexOf(this.name);
+                  legendClickedChart.options.chart.__visibleSeries.splice(index, 1);
                   return false;
                 }
                 //deselect all the series which are not in the __visibleSeries array;
-                this.chart.series.forEach(serie => {
-                  if(this.chart.options.chart.__visibleSeries.includes(serie.name)){
+                legendClickedChart.series.forEach(function (serie) {
+                  if(legendClickedChart.options.chart.__visibleSeries.includes(serie.name)){
                     serie.setVisible(true);
                   }else{
                     serie.setVisible(false);
                   }
                 });
-                if(this.chart.options.chart.__visibleSeries.length === this.chart.series.length){
-                  this.chart.options.chart.__visibleSeries.length = 0;
+                if(legendClickedChart.options.chart.__visibleSeries.length === legendClickedChart.series.length){
+                  legendClickedChart.options.chart.__visibleSeries.length = 0;
                 }
               }
             }
