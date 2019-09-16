@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script crossorigin src="https://unpkg.com/@material-ui/core@3.9.3/umd/material-ui.development.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js" integrity="sha256-L/S5mZS8SPJVWoKym3Zwgf2f3/s3X3MaZ7QBA9HdnN8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <script src="https://code.highcharts.com/stock/highstock.js"></script>
+  <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+  <!-- <script src="./reverseLegendClickAction.min.js" charset="utf-8"></script> -->
+  <script src="https://jay2452.github.io/highcharts-reverseLegendClickAction/reverseLegendClickAction.min.js"></script>
+  <script type="text/babel">
+    const {
+      withStyles,
+      Grid,
+      AppBar,
+      Toolbar,
+      Button
+    } = window['material-ui'];
+
+    const styles = theme => ({
+      root: {
+        flexGrow: 1
+      },
+      button: {
+        margin: theme.spacing.unit,
+      }
+    });
+
+    class Chart1 extends React.Component {
+      constructor(props) {
+        super(props);
+      }
+      render(){
+        return (
+          <div id='chart1-container'>
+
+          </div>
+        )
+      }
+    }
+    class Chart2 extends React.Component {
+      constructor(props) {
+        super(props);
+      }
+      render(){
+        return (
+          <div id='chart2-container'>
+
+          </div>
+        )
+      }
+    }
+
+    const Chart11 = withStyles(styles)(Chart1);
+    const Chart21 = withStyles(styles)(Chart2);
+    class MainClass extends React.Component {
+      constructor(props) {
+        super(props);
+      }
+      updateChartData(){
+        const data = new Array(12).fill(35*Math.random());
+        for (let i = 0; i < data.length; i++) {
+          data[i] = Math.round(data[i]*Math.random() * 10);
+        }
+
+        Highcharts.charts.forEach(c => {
+          c.setSize();
+        });
+      }
+      render(){
+        const { classes } = this.props;
+        return (
+          <div className={classes.root}>
+            <AppBar position='static' className={classes.appbar}>
+              <Toolbar>
+                <Button variant="contained" className={classes.button} onClick={this.updateChartData}>
+                  Update Data
+                </Button>
+              </Toolbar>
+            </AppBar>
+            <Grid container>
+              <Grid item lg={6} md={6}>
+                <Chart11/>
+              </Grid>
+              <Grid item lg={6} md={6}>
+                <Chart21/>
+              </Grid>
+            </Grid>
+          </div>
+        )
+      }
+    }
+    const MainClass1 = withStyles(styles)(MainClass);
+    ReactDOM.render(<MainClass1/>, document.body);
+
+
+
+  var seriesOptions = [],
+  seriesCounter = 0,
+  names = ['MSFT', 'AAPL', 'GOOG'];
+  // names = ['MSFT', 'AAPL']
+
+/**
+ * Create the chart when all data is loaded
+ * @returns {undefined}
+ */
+function createChart() {
+
+  Highcharts.stockChart('chart1-container', {
+
+    rangeSelector: {
+      selected: 4
+    },
+
+    yAxis: {
+      labels: {
+        formatter: function() {
+          return (this.value > 0 ? ' + ' : '') + this.value + '%';
+        }
+      },
+      plotLines: [{
+        value: 0,
+        width: 2,
+        color: 'silver'
+      }]
+    },
+
+    plotOptions: {
+      series: {
+        compare: 'percent',
+        showInNavigator: true
+      }
+    },
+
+    tooltip: {
+      pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+      valueDecimals: 2,
+      split: true
+    },
+
+    series: seriesOptions,
+    legend: {
+      enabled: true,
+      reverseLegendClickAction: true
+    }
+  });
+}
+
+names.forEach(function(name, i) {
+
+  Highcharts.getJSON(
+    'https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/' + name.toLowerCase() + '-c.json',
+    function(data) {
+
+      seriesOptions[i] = {
+        name: name,
+        data: data
+      };
+
+      // As we're loading the data asynchronously, we don't know what order it will arrive. So
+      // we keep a counter and create the chart when all the data is loaded.
+      seriesCounter += 1;
+
+      if (seriesCounter === names.length) {
+        createChart();
+      }
+    }
+  );
+});
+
+  </script>
+
+</body>
+
+</html>
