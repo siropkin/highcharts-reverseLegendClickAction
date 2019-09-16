@@ -23,6 +23,10 @@
                 e.preventDefault();
                 var index = -1;
                 var legendClickedChart = this.chart;
+                var isStockChart = false;
+                if(legendClickedChart.rangeSelector || legendClickedChart.navigator){
+                  isStockChart = true;
+                }
                 if(legendClickedChart.options.chart.__visibleSeries.length == 1 && legendClickedChart.options.chart.__visibleSeries[0] === this.name){
                   // make all legend items visible
                   legendClickedChart.series.forEach(function (serie) {
@@ -40,16 +44,26 @@
                   return false;
                 }
                 //deselect all the series which are not in the __visibleSeries array;
+                // don't consider navigator series
                 legendClickedChart.series.forEach(function (serie) {
-                  if(legendClickedChart.options.chart.__visibleSeries.includes(serie.name)){
-                    serie.setVisible(true);
-                  }else{
-                    serie.setVisible(false);
+                  if(!serie.name.includes('Navigator')){
+                    if(legendClickedChart.options.chart.__visibleSeries.includes(serie.name)){
+                      serie.setVisible(true);
+                    }else{
+                      serie.setVisible(false);
+                    }
                   }
                 });
-                if(legendClickedChart.options.chart.__visibleSeries.length === legendClickedChart.series.length){
-                  legendClickedChart.options.chart.__visibleSeries.length = 0;
+                if(isStockChart){
+                  if(legendClickedChart.options.chart.__visibleSeries.length === legendClickedChart.series.length/2){
+                    legendClickedChart.options.chart.__visibleSeries.length = 0;
+                  }
+                }else{
+                  if(legendClickedChart.options.chart.__visibleSeries.length === legendClickedChart.series.length){
+                    legendClickedChart.options.chart.__visibleSeries.length = 0;
+                  }
                 }
+
               }
             }
           }
