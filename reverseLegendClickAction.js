@@ -55,7 +55,7 @@
                   }
                 });
                 if(isStockChart){
-                  if(legendClickedChart.options.chart.__visibleSeries.length === legendClickedChart.series.length/2){
+                  if(legendClickedChart.options.chart.__visibleSeries.length === (legendClickedChart.series.length - legendClickedChart.navigator.series.length)){
                     legendClickedChart.options.chart.__visibleSeries.length = 0;
                   }
                 }else{
