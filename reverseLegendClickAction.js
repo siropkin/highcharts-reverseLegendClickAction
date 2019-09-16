@@ -54,16 +54,13 @@
                     }
                   }
                 });
-                if(isStockChart){
-                  if(legendClickedChart.options.chart.__visibleSeries.length === (legendClickedChart.series.length - legendClickedChart.navigator.series.length)){
-                    legendClickedChart.options.chart.__visibleSeries.length = 0;
-                  }
-                }else{
-                  if(legendClickedChart.options.chart.__visibleSeries.length === legendClickedChart.series.length){
-                    legendClickedChart.options.chart.__visibleSeries.length = 0;
-                  }
+                var totalSeriesLength = legendClickedChart.series.length;
+                if(isStockChart == true && legendClickedChart.navigator.navigatorEnabled == true){
+                  totalSeriesLength = legendClickedChart.series.length - legendClickedChart.navigator.series.length;
                 }
-
+                if(legendClickedChart.options.chart.__visibleSeries.length === totalSeriesLength){
+                  legendClickedChart.options.chart.__visibleSeries.length = 0;
+                }
               }
             }
           }
