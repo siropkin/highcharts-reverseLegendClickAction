@@ -30,7 +30,7 @@
                 if(legendClickedChart.options.chart.__visibleSeries.length == 1 && legendClickedChart.options.chart.__visibleSeries[0] === this.name){
                   // make all legend items visible
                   legendClickedChart.series.forEach(function (serie) {
-                    serie.setVisible(true);
+                    serie.setVisible(true, false);
                   });
                   legendClickedChart.options.chart.__visibleSeries.length = 0;
                   return false;
@@ -38,7 +38,7 @@
                 if(!legendClickedChart.options.chart.__visibleSeries.includes(this.name)){
                   legendClickedChart.options.chart.__visibleSeries.push(this.name);
                 }else{
-                  this.setVisible(false);
+                  this.setVisible(false, false);
                   index = legendClickedChart.options.chart.__visibleSeries.indexOf(this.name);
                   legendClickedChart.options.chart.__visibleSeries.splice(index, 1);
                   return false;
@@ -48,9 +48,9 @@
                 legendClickedChart.series.forEach(function (serie) {
                   if(!serie.name.includes('Navigator')){
                     if(legendClickedChart.options.chart.__visibleSeries.includes(serie.name)){
-                      serie.setVisible(true);
+                      serie.setVisible(true, false);
                     }else{
-                      serie.setVisible(false);
+                      serie.setVisible(false, false);
                     }
                   }
                 });
@@ -61,6 +61,7 @@
                 if(legendClickedChart.options.chart.__visibleSeries.length === totalSeriesLength){
                   legendClickedChart.options.chart.__visibleSeries.length = 0;
                 }
+                this.redraw();
               }
             }
           }
