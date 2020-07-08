@@ -39,10 +39,9 @@
                 if(!legendClickedChart.options.chart.__visibleSeries.includes(this.name)){
                   legendClickedChart.options.chart.__visibleSeries.push(this.name);
                 }else{
-                  this.setVisible(false, false);
+                  this.setVisible(false);
                   index = legendClickedChart.options.chart.__visibleSeries.indexOf(this.name);
                   legendClickedChart.options.chart.__visibleSeries.splice(index, 1);
-                  this.redraw();
                   return false;
                 }
                 // deselect all the series which are not in the __visibleSeries array;
