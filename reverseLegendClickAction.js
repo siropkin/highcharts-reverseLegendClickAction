@@ -47,7 +47,7 @@
                 // deselect all the series which are not in the __visibleSeries array;
                 // don't consider navigator series
                 legendClickedChart.series.forEach(function (serie) {
-                  if(!serie.name.includes('Navigator')){
+                  if(!`${serie.name}`.includes('Navigator')){
                     if(legendClickedChart.options.chart.__visibleSeries.includes(serie.name)){
                       serie.setVisible(true, false);
                     }else{
